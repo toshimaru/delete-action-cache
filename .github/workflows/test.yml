@@ -1,0 +1,88 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  runners:
+    runs-on: ubuntu-latest
+    outputs:
+      all: ${{ steps.list.outputs.all }}
+      windows: ${{ steps.list.outputs.windows }}
+    steps:
+      - id: list
+        uses: snow-actions/list-github-hosted-runners@v1.0.0
+  
+  test-bash:
+    needs: [ runners ]
+    strategy:
+      fail-fast: false
+      matrix:
+        # Runs on all supported runners
+        # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+        runner: ${{ fromJSON(needs.runners.outputs.all) }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: without-parameters
+        uses: ./
+      - run: test "${GREET}" = "Hello World"
+        env:
+          GREET: ${{ steps.without-parameters.outputs.greet }}
+      - run: test "$(cat greet.txt)" = "Hello World"
+
+      - id: with-parameters
+        uses: ./
+        with:
+          who-to-greet: composite action
+      - run: test "${GREET}" = "Hello composite action"
+        env:
+          GREET: ${{ steps.with-parameters.outputs.greet }}
+      - run: test "$(cat greet.txt)" = "Hello composite action"
+
+  test-powershell:
+    needs: [ runners ]
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: ${{ fromJSON(needs.runners.outputs.windows) }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: without-parameters
+        uses: ./
+      - run: test "${env:GREET}" = "Hello World"
+        env:
+          GREET: ${{ steps.without-parameters.outputs.greet }}
+      - run: test "$(cat greet.txt)" = "Hello World"
+
+      - id: with-parameters
+        uses: ./
+        with:
+          who-to-greet: composite action
+      - run: test "${env:GREET}" = "Hello composite action"
+        env:
+          GREET: ${{ steps.with-parameters.outputs.greet }}
+      - run: test "$(cat greet.txt)" = "Hello composite action"
+
+  # Make up matrix statuses into a status for status checks in branch protection rules
+  test-passing:
+    needs: [ test-bash, test-powershell ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+
+    steps:
+      - run: echo "All tests have passed."

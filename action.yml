@@ -1,0 +1,26 @@
+name: Composite Action Template
+description: Get started with Composite actions
+branding:
+  icon: award
+  color: green
+inputs:
+  who-to-greet:
+    description: Who to greet
+    required: true
+    default: World
+outputs:
+  greet:
+    description: The word we greeted you
+    value: ${{ steps.greet.outputs.word }}
+runs:
+  using: composite
+  steps:
+    - id: greet
+      run: |
+        GREET="Hello ${WHO}"
+        echo "${GREET}"
+        echo "${GREET}" > greet.txt
+        echo "word=${GREET}" >> $GITHUB_OUTPUT
+      shell: bash
+      env:
+        WHO: ${{ inputs.who-to-greet }}
