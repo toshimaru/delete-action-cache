@@ -1,8 +1,8 @@
 name: Composite Action Template
 description: Get started with Composite actions
 branding:
-  icon: award
-  color: green
+  icon: 'trash'
+  color: 'gray-dark'
 inputs:
   repo-token:
     description: 'A token for the repository'
