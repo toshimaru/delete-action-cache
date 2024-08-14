@@ -4,7 +4,7 @@ branding:
   icon: 'trash'
   color: 'gray-dark'
 inputs:
-  repo-token:
+  github-token:
     description: 'A token for the repository'
     default: ${{ github.token }}
   branch:
@@ -16,10 +16,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Delete GtiHub Actions Cache
+    - name: Delete GitHub Actions Cache
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
+        GH_TOKEN: ${{ inputs.github-token }}
       run: |
         echo "${{ inputs.branch }}"
         echo "${{ inputs.pr-number }}"
