@@ -10,6 +10,9 @@ inputs:
   branch:
     description: 'A branch name for the cache deletion'
     default: ${{ github.ref }}
+  pr-number:
+    description: 'A number of the Pull Request'
+    default: ${{ github.event.number }}
 runs:
   using: composite
   steps:
