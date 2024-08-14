@@ -7,6 +7,9 @@ inputs:
   repo-token:
     description: 'A token for the repository'
     default: ${{ github.token }}
+  branch:
+    description: 'A branch name for the cache deletion'
+    default: ${{ github.ref }}
 runs:
   using: composite
   steps:
