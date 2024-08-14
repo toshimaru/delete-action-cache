@@ -16,12 +16,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - id: greet
-      run: |
-        GREET="Hello ${WHO}"
-        echo "${GREET}"
-        echo "${GREET}" > greet.txt
-        echo "word=${GREET}" >> $GITHUB_OUTPUT
+    - name: Delete GtiHub Actions Cache
       shell: bash
       env:
-        WHO: ${{ inputs.who-to-greet }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: |
+        echo "${{ inputs.branch }}"
+        echo "${{ inputs.pr-number }}"
+        gh cache list --json id,key,ref
