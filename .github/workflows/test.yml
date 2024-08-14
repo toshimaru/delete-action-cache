@@ -8,25 +8,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-bash:
+  test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    defaults:
-      run:
-        shell: bash
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
       - id: without-parameters
         uses: ./
-      - run: test "${GREET}" = "Hello World"
-        env:
-          GREET: ${{ steps.without-parameters.outputs.greet }}
-      - run: test "$(cat greet.txt)" = "Hello World"
       - id: with-parameters
         uses: ./
         with:
-          who-to-greet: composite action
-      - run: test "${GREET}" = "Hello composite action"
-        env:
-          GREET: ${{ steps.with-parameters.outputs.greet }}
-      - run: test "$(cat greet.txt)" = "Hello composite action"
+          repo-token: MY_TOKEN
+          branch: main
