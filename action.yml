@@ -4,21 +4,23 @@ branding:
   icon: 'trash'
   color: 'gray-dark'
 inputs:
-  repo-token:
+  github-token:
     description: 'A token for the repository'
     default: ${{ github.token }}
   branch:
     description: 'A branch name for the cache deletion'
     default: ${{ github.ref }}
+  pr-number:
+    description: 'A number of the Pull Request'
+    default: ${{ github.event.number }}
 runs:
   using: composite
   steps:
-    - id: greet
-      run: |
-        GREET="Hello ${WHO}"
-        echo "${GREET}"
-        echo "${GREET}" > greet.txt
-        echo "word=${GREET}" >> $GITHUB_OUTPUT
+    - name: Delete GitHub Actions Cache
       shell: bash
       env:
-        WHO: ${{ inputs.who-to-greet }}
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        echo "${{ inputs.branch }}"
+        echo "${{ inputs.pr-number }}"
+        gh cache list --json id,key,ref
