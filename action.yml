@@ -1,5 +1,6 @@
-name: Composite Action Template
-description: Get started with Composite actions
+name: Delete Action Cache
+description: Delete GitHub Actions Cache after a pull request is closed
+author: 'toshimaru'
 branding:
   icon: 'trash'
   color: 'gray-dark'
@@ -7,9 +8,13 @@ inputs:
   github-token:
     description: 'A token for the repository'
     default: ${{ github.token }}
-  branch:
-    description: 'A branch name for the cache deletion'
+  ref:
+    description: 'The value of `github.ref`'
     default: ${{ github.ref }}
+  head-ref:
+    description: 'The value of `github.head_ref`'
+    default: ${{ github.head_ref }}
+  # TODO: it not needed?
   pr-number:
     description: 'A number of the Pull Request'
     default: ${{ github.event.number }}
@@ -21,6 +26,7 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.github-token }}
       run: |
-        echo "${{ inputs.branch }}"
+        echo "${{ inputs.ref }}"
+        echo "${{ inputs.head-ref }}"
         echo "${{ inputs.pr-number }}"
         gh cache list --json id,key,ref

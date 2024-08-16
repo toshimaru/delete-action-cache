@@ -2,22 +2,15 @@
 
 # Delete Action Cache
 
+## Motivation
+
+TODO
+
 ## Usage
 
-### Basic
-
 ```yml
 steps:
-  - uses: snow-actions/composite-action-template@v1.0.0
-```
-
-### Optional
-
-```yml
-steps:
-  - uses: snow-actions/composite-action-template@v1.0.0
-    with:
-      who-to-greet: Your name
+  - uses: toshimaru/delete-action-cache@main
 ```
 
 ## Inputs
@@ -35,4 +28,3 @@ See [action.yml](action.yml)
 - `push`
 - `pull_request`
 -->
-
