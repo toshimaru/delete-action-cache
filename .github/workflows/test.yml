@@ -18,5 +18,6 @@ jobs:
       - id: with-parameters
         uses: ./
         with:
-          branch: main
+          ref: ref value
+          head-ref: head_ref value
           pr-number: 0
