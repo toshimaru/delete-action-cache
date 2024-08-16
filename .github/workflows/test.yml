@@ -20,4 +20,5 @@ jobs:
         with:
           ref: ref value
           head-ref: head_ref value
+          base-ref: base_ref value
           pr-number: 0
