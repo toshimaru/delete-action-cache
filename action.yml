@@ -14,7 +14,9 @@ inputs:
   head-ref:
     description: 'The value of `github.head_ref`'
     default: ${{ github.head_ref }}
-  # TODO: it not needed?
+  base-ref:
+    description: 'The value of `github.base_ref`'
+    default: ${{ github.base_ref }}
   pr-number:
     description: 'A number of the Pull Request'
     default: ${{ github.event.number }}
@@ -29,4 +31,5 @@ runs:
         echo "${{ inputs.ref }}"
         echo "${{ inputs.head-ref }}"
         echo "${{ inputs.pr-number }}"
+        echo "${{ inputs.base-ref }}"
         gh cache list --json id,key,ref
