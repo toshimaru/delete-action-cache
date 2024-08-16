@@ -1,5 +1,6 @@
-name: Composite Action Template
-description: Get started with Composite actions
+name: Delete Action Cache
+description: Delete GitHub Actions Cache after a pull request is closed
+author: 'toshimaru'
 branding:
   icon: 'trash'
   color: 'gray-dark'
