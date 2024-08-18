@@ -14,6 +14,9 @@ inputs:
   pr-number:
     description: 'A number of the Pull Request'
     default: ${{ github.event.number }}
+  repo:
+    description: 'The repository name'
+    default: ${{ github.repository }}
 runs:
   using: composite
   steps:
@@ -22,8 +25,8 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.github-token }}
       run: |
-        echo "${{ inputs.head-ref }}"
-        echo "${{ inputs.pr-number }}"
+        # Set default repository
+        gh repo set-default ${{ inputs.repo }}
 
         # Delete pull request caches
         for id in $(gh cache list --ref refs/pull/${{ inputs.pr-number }}/merge --json id --jq '.[].id'); do

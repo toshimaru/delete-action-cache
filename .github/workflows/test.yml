@@ -13,12 +13,11 @@ jobs:
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
-      - id: without-parameters
+      - name: Run Action without parameters
         uses: ./
-      - id: with-parameters
+      - name: Run Action with parameters
         uses: ./
         with:
-          ref: ref value
           head-ref: head_ref value
-          base-ref: base_ref value
           pr-number: 0
+          repo: ${{ github.repository }}
