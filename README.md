@@ -9,8 +9,15 @@ TODO
 ## Usage
 
 ```yml
-steps:
-  - uses: toshimaru/delete-action-cache@main
+name: Delete Action Cache
+on:
+  pull_request_target:
+    types: [closed]
+jobs:
+  delete-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: toshimaru/delete-action-cache@main
 ```
 
 ## Inputs
@@ -21,10 +28,7 @@ See [action.yml](action.yml)
 | - | - | - | - |
 | `who-to-greet` | Who to greet | `World` | yes |
 
-### Events
+### Supported Events
 
-- Any
-<!--
-- `push`
 - `pull_request`
--->
+- `pull_request_target`
