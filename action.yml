@@ -8,15 +8,9 @@ inputs:
   github-token:
     description: 'A token for the repository'
     default: ${{ github.token }}
-  ref:
-    description: 'The value of `github.ref`'
-    default: ${{ github.ref }}
   head-ref:
     description: 'The value of `github.head_ref`'
     default: ${{ github.head_ref }}
-  base-ref:
-    description: 'The value of `github.base_ref`'
-    default: ${{ github.base_ref }}
   pr-number:
     description: 'A number of the Pull Request'
     default: ${{ github.event.number }}
@@ -28,8 +22,15 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.github-token }}
       run: |
-        echo "${{ inputs.ref }}"
         echo "${{ inputs.head-ref }}"
         echo "${{ inputs.pr-number }}"
-        echo "${{ inputs.base-ref }}"
-        gh cache list --json id,key,ref
+
+        # Delete pull request caches
+        for id in $(gh cache list --ref refs/pull/${{ inputs.pr-number }}/merge --json id --jq '.[].id'); do
+          gh cache delete $id
+        done
+
+        # Delete branch caches
+        for id in $(gh cache list --ref refs/heads/${{ inputs.head-ref }} --json id --jq '.[].id'); do
+          gh cache delete $id
+        done
