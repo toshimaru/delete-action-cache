@@ -24,4 +24,13 @@ runs:
       run: |
         echo "${{ inputs.head-ref }}"
         echo "${{ inputs.pr-number }}"
-        gh cache list --json id,key,ref
+
+        # Delete pull request caches
+        for id in $(gh cache list --ref refs/pull/${{ inputs.pr-number }}/merge --json id --jq '.[].id'); do
+          gh cache delete $id
+        done
+
+        # Delete branch caches
+        for id in $(gh cache list --ref refs/heads/${{ inputs.head-ref }} --json id --jq '.[].id'); do
+          gh cache delete $id
+        done
