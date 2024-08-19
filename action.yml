@@ -25,15 +25,12 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.github-token }}
       run: |
-        # Set default repository
-        gh repo set-default ${{ inputs.repo }}
-
         # Delete pull request caches
-        for id in $(gh cache list --ref refs/pull/${{ inputs.pr-number }}/merge --json id --jq '.[].id'); do
-          gh cache delete $id
+        for id in $(gh cache list --repo ${{ inputs.repo }} --ref refs/pull/${{ inputs.pr-number }}/merge --json id --jq '.[].id'); do
+          gh cache delete $id --repo ${{ inputs.repo }}
         done
 
         # Delete branch caches
-        for id in $(gh cache list --ref refs/heads/${{ inputs.head-ref }} --json id --jq '.[].id'); do
-          gh cache delete $id
+        for id in $(gh cache list --repo ${{ inputs.repo }} --ref refs/heads/${{ inputs.head-ref }} --json id --jq '.[].id'); do
+          gh cache delete $id --repo ${{ inputs.repo }}
         done
