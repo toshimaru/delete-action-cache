@@ -52,6 +52,5 @@ runs:
             ;;
           *)
             echo "Unsupported event: ${{ github.event_name }}"
-            exit 1
             ;;
         esac
