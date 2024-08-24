@@ -8,6 +8,9 @@ inputs:
   github-token:
     description: 'A token for the repository'
     default: ${{ github.token }}
+  limit:
+    description: 'The number of caches to delete'
+    default: '100'
   head-ref:
     description: 'The value of `github.head_ref`'
     default: ${{ github.head_ref }}
@@ -32,20 +35,23 @@ runs:
         case ${{ github.event_name }} in
           pull_request|pull_request_target)
             # Delete pull request caches
-            for id in $(gh cache list --ref refs/pull/${{ inputs.pr-number }}/merge --json id --jq '.[].id'); do
+            echo "Deleting caches for the ref `refs/pull/${{ inputs.pr-number }}/merge`..."
+            for id in $(gh cache list --ref refs/pull/${{ inputs.pr-number }}/merge --json id --jq '.[].id' --order asc --limit ${{ inputs.limit }}); do
               gh cache delete $id
               echo "Cache deleted. (id: $id)"
             done
 
             # Delete branch caches
-            for id in $(gh cache list --ref refs/heads/${{ inputs.head-ref }} --json id --jq '.[].id'); do
+            echo "Deleting caches for the ref `refs/heads/${{ inputs.head-ref }}`..."
+            for id in $(gh cache list --ref refs/heads/${{ inputs.head-ref }} --json id --jq '.[].id' --order asc --limit ${{ inputs.limit }}); do
               gh cache delete $id
               echo "Cache deleted. (id: $id)"
             done
             ;;
           workflow_dispatch)
             # Delete branch caches
-            for id in $(gh cache list --ref ${{ inputs.ref }} --json id --jq '.[].id'); do
+            echo "Deleting caches for the ref `${{ inputs.ref }}`..."
+            for id in $(gh cache list --ref ${{ inputs.ref }} --json id --jq '.[].id' --order asc --limit ${{ inputs.limit }}); do
               gh cache delete $id
               echo "Cache deleted. (id: $id)"
             done

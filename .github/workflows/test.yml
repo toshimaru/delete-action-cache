@@ -18,6 +18,8 @@ jobs:
       - name: Run Action with parameters
         uses: ./
         with:
+          limit: 1
           head-ref: head_ref value
           pr-number: 0
+          ref: ref value
           repo: ${{ github.repository }}
