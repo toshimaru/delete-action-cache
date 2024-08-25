@@ -28,11 +28,14 @@ jobs:
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
-      - name: Run Action without parameters
+      - name: Run Action with limit 1
         uses: ./
+        with:
+          limit: 1
       - name: Run Action with parameters
         uses: ./
         with:
+          github-token: ${{ github.token }}
           limit: 1
           head-ref: head_ref value
           pr-number: 0
