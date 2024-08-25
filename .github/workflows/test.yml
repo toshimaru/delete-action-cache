@@ -23,6 +23,8 @@ jobs:
   delete-cache:
     runs-on: ubuntu-latest
     needs: generate-cache
+    permissions:
+      actions: write
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
