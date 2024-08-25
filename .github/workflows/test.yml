@@ -2,14 +2,29 @@ name: Test
 
 on:
   push:
-    branches:
-      - main
   pull_request:
   workflow_dispatch:
 
 jobs:
-  test:
+  generate-cache:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        package-manager: [npm, yarn]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: ${{ matrix.package-manager }}
+          cache-dependency-path: "fixture"
+  delete-cache:
     runs-on: ubuntu-latest
+    needs: generate-cache
+    permissions:
+      actions: write
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
