@@ -48,7 +48,7 @@ runs:
               echo "Cache deleted. (id: $id)"
             done
             ;;
-          workflow_dispatch)
+          workflow_dispatch|push)
             # Delete branch caches
             echo "Deleting caches for the ref \`${{ inputs.ref }}\`..."
             for id in $(gh cache list --ref ${{ inputs.ref }} --json id --jq '.[].id' --order asc --limit ${{ inputs.limit }}); do
