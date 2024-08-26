@@ -36,8 +36,13 @@ jobs:
         uses: ./
         with:
           github-token: ${{ github.token }}
-          limit: 1
+          limit: 10
           head-ref: head_ref value
           pr-number: 0
           ref: ref value
           repo: ${{ github.repository }}
+      - name: Run Action with branch
+        uses: ./
+        with:
+          limit: 1
+          branch: main
