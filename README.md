@@ -61,11 +61,16 @@ See also. [Manually running a workflow - GitHub Docs](https://docs.github.com/en
 
 See [action.yml](action.yml)
 
-| Name | Description | Default | Required |
-| - | - | - | - |
-| `who-to-greet` | Who to greet | `World` | yes |
+| Name | Description | Default |
+| - | - | - |
+| `github-token` | A token for the repository | `github.token` |
+| `limit` | The number of caches to delete | 100 |
+| `branch` | The branch name where the cache is stored | - |
+| `repo` | The repository name | `github.repository` |
 
-### Supported Events
+## Supported Events
 
 - `pull_request`
 - `pull_request_target`
+- `workflow_dispatch`
+- `push`
