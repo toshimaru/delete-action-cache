@@ -2,6 +2,10 @@
 
 # Delete Action Cache
 
+Delete GitHub Actions cache with ease.
+
+![OG image](./img/delete-cache-action.png)
+
 ## Motivation
 
 TODO
