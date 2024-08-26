@@ -13,6 +13,9 @@ inputs:
     default: '100'
   branch:
     description: 'The branch name where the cache is stored'
+  repo:
+    description: 'The repository name'
+    default: ${{ github.repository }}
   head-ref:
     description: 'The value of `github.head_ref`'
     default: ${{ github.head_ref }}
@@ -22,9 +25,6 @@ inputs:
   ref:
     description: 'The value of `github.ref`'
     default: ${{ github.ref }}
-  repo:
-    description: 'The repository name'
-    default: ${{ github.repository }}
 runs:
   using: composite
   steps:
