@@ -1,0 +1,33 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'VERSION'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Create a tag based on the VERSION file
+        uses: salsify/action-detect-and-tag-new-version@v2
+        id: tag-new-version
+        with:
+          version-command: cat VERSION
+      - name: Create a release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          tag_name: ${{ steps.tag-new-version.outputs.tag }}
+        if: ${{ steps.tag-new-version.outputs.tag }}
+      # - name: Push HEAD to main version branch
+      #   run: |
+      #     branch_name=$(echo "${{ steps.tag-new-version.outputs.tag }}" | sed -E "s/(v[0-9]+)\..+/\1/")
+      #     git push --force origin "HEAD:refs/heads/${branch_name}"
+      #   if: ${{ steps.tag-new-version.outputs.tag }}
