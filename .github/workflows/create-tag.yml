@@ -1,4 +1,4 @@
-name: Release
+name: Create Tag
 on:
   push:
     branches:
@@ -11,10 +11,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - uses: salsify/action-detect-and-tag-new-version@v2
+      - name: Create a tag based on the VERSION file
+        uses: salsify/action-detect-and-tag-new-version@v2
         id: tag-new-version
         with:
           version-command: cat VERSION
