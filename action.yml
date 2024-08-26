@@ -11,6 +11,8 @@ inputs:
   limit:
     description: 'The number of caches to delete'
     default: '100'
+  branch:
+    description: 'The branch name where the cache is stored'
   head-ref:
     description: 'The value of `github.head_ref`'
     default: ${{ github.head_ref }}
@@ -32,6 +34,18 @@ runs:
         GH_TOKEN: ${{ inputs.github-token }}
         GH_REPO: ${{ inputs.repo }}
       run: |
+        # If the branch is specified, delete the caches for the branch
+        if [ -n "${{ inputs.branch }}" ]; then
+          # Delete branch caches
+          echo "Deleting caches for the brach \`${{ inputs.branch }}\`..."
+          for id in $(gh cache list --ref "refs/heads/${{ inputs.branch }}" --json id --jq '.[].id' --order asc --limit "${{ inputs.limit }}"); do
+            gh cache delete $id
+            echo "Cache deleted. (id: $id)"
+          done
+
+          exit 0
+        fi
+
         case ${{ github.event_name }} in
           pull_request|pull_request_target)
             # Delete pull request caches
