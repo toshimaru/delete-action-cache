@@ -1,5 +1,5 @@
 name: Delete Action Cache
-description: Delete GitHub Actions Cache after a pull request is closed
+description: Delete GitHub Actions Cache with ease
 author: 'toshimaru'
 branding:
   icon: 'trash'
