@@ -24,6 +24,8 @@ To prevent reaching this limit, it’s essential to delete unused or unnecessary
 
 ## Usage
 
+### Delete caches after a pull request is closed/merged
+
 ```yml
 name: Delete Action Cache
 on:
@@ -35,6 +37,25 @@ jobs:
     steps:
       - uses: toshimaru/delete-action-cache@main
 ```
+
+### Delete caches manually
+
+```yml
+name: Delete Action Cache
+on:
+  worklflow_dispatch:
+jobs:
+  delete-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: toshimaru/delete-action-cache@main
+```
+
+- Select a Branch from dropdown menu
+- Click Run workflow
+- The action deletes the branch caches
+
+See also. [Manually running a workflow - GitHub Docs](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow)
 
 ## Inputs
 
