@@ -43,7 +43,7 @@ jobs:
 ```yml
 name: Delete Action Cache
 on:
-  worklflow_dispatch:
+  workflow_dispatch:
 jobs:
   delete-cache:
     runs-on: ubuntu-latest
