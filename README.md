@@ -40,6 +40,8 @@ jobs:
 
 ### Delete caches manually
 
+Use the `workflow_dispatch` event to trigger the action manually.
+
 ```yml
 name: Delete Action Cache
 on:
@@ -51,8 +53,8 @@ jobs:
       - uses: toshimaru/delete-action-cache@main
 ```
 
-- Select a branch from dropdown menu
-- Click "Run workflow"
+- **Select a branch** from dropdown menu
+- Click "**Run workflow**"
 - The action deletes the branch caches
 
 See also. [Manually running a workflow - GitHub Docs](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow)
@@ -73,4 +75,5 @@ See [action.yml](action.yml)
 - `pull_request`
 - `pull_request_target`
 - `workflow_dispatch`
+- `schedule`
 - `push`
