@@ -59,6 +59,23 @@ jobs:
 
 See also. [Manually running a workflow - GitHub Docs](https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow)
 
+### Schedule cache deletion
+
+Delete caches periodically with the `schedule` event.
+
+```yml
+name: delete action cache
+on:
+  schedule:
+    - cron: '0 3 * * *'
+jobs:
+  delete-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: toshimaru/delete-action-cache@main
+        branch: my-cache-branch
+```
+
 ## Inputs
 
 See [action.yml](action.yml)
@@ -67,7 +84,7 @@ See [action.yml](action.yml)
 | - | - | - |
 | `github-token` | A token for the repository | `github.token` |
 | `limit` | The number of caches to delete | 100 |
-| `branch` | The branch name where the cache is stored | - |
+| `branch` | The branch name where the cache is stored | - (default branch) |
 | `repo` | The repository name | `github.repository` |
 
 ## Supported Events
