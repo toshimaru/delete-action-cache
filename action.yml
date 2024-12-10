@@ -37,7 +37,7 @@ runs:
         # If the branch is specified, delete the caches for the branch
         if [ -n "${{ inputs.branch }}" ]; then
           # Delete branch caches
-          echo "Deleting caches for the brach \`${{ inputs.branch }}\`..."
+          echo "Deleting caches for the branch \`${{ inputs.branch }}\`..."
           for id in $(gh cache list --ref "refs/heads/${{ inputs.branch }}" --json id --jq '.[].id' --order asc --limit "${{ inputs.limit }}"); do
             gh cache delete $id
             echo "Cache deleted. (id: $id)"
