@@ -13,7 +13,7 @@ jobs:
         package-manager: [npm, yarn]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
@@ -27,7 +27,7 @@ jobs:
       actions: write
     timeout-minutes: 1
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Run Action with limit 1
         uses: ./
         with:
